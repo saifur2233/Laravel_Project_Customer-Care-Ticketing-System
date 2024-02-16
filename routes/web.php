@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
     //ticket 
     Route::resource('ticket', TicketController::class);
+    Route::get('/ticket/{id}/delete', [TicketController::class, 'destroy']);
     //Route::get('/ticket/create', [TicketController::class, 'create'])->name('ticket.create');
     //Route::post('/ticket/create', [TicketController::class, 'store'])->name('ticket.store');
 });

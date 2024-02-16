@@ -10,7 +10,7 @@
 <body>
 
 <div class="container-fluid p-3 bg-primary text-white text-center">
-  <h1>Ticket Page</h1>
+  <h1>Show Ticket Page</h1>
 </div>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -31,7 +31,7 @@
           <a class="nav-link" href="/dashboard">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/ticket/create">Go Back</a>
+          <a class="nav-link" href="/ticket">Go Back</a>
         </li>
        
       </ul>
@@ -43,53 +43,22 @@
 <div class="col-12">
    <div class="card">
   <div class="card-header text-primary fw-bold">
-    All Support Ticket
+    {{ $ticket->title }}
   </div>
   <div class="card-body">
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Status</th>
-       <th scope="col">Attachments</th>
-        <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-     @foreach ($tickets as $item)
-    <tr>
-      <th scope="row">{{ $item->id }}</th>
-      <td><a href="{{ route('ticket.show', $item->id) }}">{{ $item->title }}</a></td>
-      <td>
-      {{ $item->status }}
-      </td>
-      <td>
-      {{ $item->created_at }}
-      </td>
-      <td>
-      {{ $item->updated_at }}
-      </td>
-      <td>
-      <a href="{{ route('ticket.edit', $item->id) }}" class="btn btn-success">Edit</a></div>
-      <!-- <form action="{{ route('ticket.destroy', $item->id) }}" method="post">
-      @method('delete')  
-      @csrf </form> -->
-      <a href="{{ url('ticket/'.$item->id.'/delete') }}" class="btn btn-danger" 
-      onClick="return confirm('Are You Sure?')"
-      >Delete</a> 
-    </div>
-    </tr>
-    @endforeach 
-   
-  </tbody>
-</table>
+   <div>{{ $ticket->description }}</div> </br>
+    @if($ticket->attachment)
+     <a href="{{ '/storage/app/public/attachments'. $ticket->attachment }}" target="_blank" class="btn btn-sm btn-primary">Attachments</a></div>
+    @endif
   </div>
   <div class="card-footer text-body-secondary">
-    2 days ago
+    <div class="d-flex justify-content-between">
+    <p>Created at: {{ $ticket->created_at }}</p>
+    <p>Updated at: {{ $ticket->updated_at }} </p>
+</div>
   </div>
 </div>
+  
    </div>
   </div>
 </div>

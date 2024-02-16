@@ -10,7 +10,7 @@
 <body>
 
 <div class="container-fluid p-3 bg-primary text-white text-center">
-  <h1>Ticket Page</h1>
+  <h1>Edit Ticket Page</h1>
 </div>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -31,7 +31,7 @@
           <a class="nav-link" href="/dashboard">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/ticket/create">Go Back</a>
+          <a class="nav-link" href="/ticket">Go Back</a>
         </li>
        
       </ul>
@@ -40,56 +40,48 @@
 </nav>
 <div class="container mt-5">
   <div class="row">
-<div class="col-12">
+  <div class="col-2"></div>
+<div class="col-8">
    <div class="card">
   <div class="card-header text-primary fw-bold">
-    All Support Ticket
+    Edit Support Ticket
   </div>
   <div class="card-body">
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Status</th>
-       <th scope="col">Attachments</th>
-        <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-     @foreach ($tickets as $item)
-    <tr>
-      <th scope="row">{{ $item->id }}</th>
-      <td><a href="{{ route('ticket.show', $item->id) }}">{{ $item->title }}</a></td>
-      <td>
-      {{ $item->status }}
-      </td>
-      <td>
-      {{ $item->created_at }}
-      </td>
-      <td>
-      {{ $item->updated_at }}
-      </td>
-      <td>
-      <a href="{{ route('ticket.edit', $item->id) }}" class="btn btn-success">Edit</a></div>
-      <!-- <form action="{{ route('ticket.destroy', $item->id) }}" method="post">
-      @method('delete')  
-      @csrf </form> -->
-      <a href="{{ url('ticket/'.$item->id.'/delete') }}" class="btn btn-danger" 
-      onClick="return confirm('Are You Sure?')"
-      >Delete</a> 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
-    </tr>
-    @endforeach 
-   
-  </tbody>
-</table>
+@endif
+    <form method="POST" action="{{ route('ticket.update', $ticket->id) }}" enctype="multipart/form-data">
+         @csrf
+         @method('PATCH')
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Title</label>
+    <input type="text" class="form-control" placeholder="Title" name="title" id="title" value="{{ $ticket->title }}" required>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Description</label>
+  <textarea class="form-control" placeholder="Write a Description here" name="description" required>{{ $ticket->description }}</textarea>
+  </div>
+<div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Attachments</label>
+    @if ($ticket->attachment)
+    <a href="{{ '/storage/' . $ticket->attachment }}" target="_blank" class="btn btn-sm btn-primary">See Attachments</a>
+    @endif
+   <input class="form-control" type="file" id="attachment" name="attachment" multiple>
+  </div>
+  <button type="submit" class="btn btn-primary">Update</button>
+</form>
   </div>
   <div class="card-footer text-body-secondary">
     2 days ago
   </div>
 </div>
+  <div class="col-2"></div>
    </div>
   </div>
 </div>
