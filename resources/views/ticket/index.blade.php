@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap 5 Example</title>
+  <title>Ticketing App</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 <body>
 
 <div class="container-fluid p-3 bg-primary text-white text-center">
-  <h1>Create Ticket Page</h1>
+  <h1>Ticket Page</h1>
 </div>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -40,44 +40,50 @@
 </nav>
 <div class="container mt-5">
   <div class="row">
-  <div class="col-2"></div>
-<div class="col-8">
+<div class="col-12">
    <div class="card">
   <div class="card-header text-primary fw-bold">
-    Create New Support Ticket
+    All Support Ticket
   </div>
   <div class="card-body">
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-    <form method="POST" action="{{ route('ticket.store') }}" enctype="multipart/form-data">
-         @csrf
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Title</label>
-    <input type="text" class="form-control" placeholder="Title" name="title" id="title" required>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Description</label>
-  <textarea class="form-control" placeholder="Write a Description here" name="description" required></textarea>
-  </div>
-<div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Attachments</label>
-   <input class="form-control" type="file" id="attachment" name="attachment" multiple>
-  </div>
-  <button type="submit" class="btn btn-primary">Create</button>
-</form>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Status</th>
+       <th scope="col">Attachments</th>
+        <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+     @foreach ($tickets as $item)
+    <tr>
+      <th scope="row">{{ $item->id }}</th>
+      <td>{{ $item->title }}</td>
+      <td>{{ $item->description }}</td>
+      <td>
+      {{ $item->status }}
+      </td>
+      <td>
+      {{ $item->attachment }}
+      </td>
+      <td>
+      <a href="" class="btn btn-success">Edit</a></div>
+      <a href="" class="btn btn-danger" 
+      onClick="return confirm('Are You Sure?')"
+      >Delete</a></div>
+    </tr>
+    @endforeach 
+   
+  </tbody>
+</table>
   </div>
   <div class="card-footer text-body-secondary">
     2 days ago
   </div>
 </div>
-  <div class="col-2"></div>
    </div>
   </div>
 </div>
