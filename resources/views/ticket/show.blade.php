@@ -43,20 +43,34 @@
 <div class="col-12">
    <div class="card">
   <div class="card-header text-primary fw-bold">
-    {{ $ticket->title }}
+   Ticket Title: {{ $ticket->title }}
   </div>
   <div class="card-body">
    <div>{{ $ticket->description }}</div> </br>
     @if($ticket->attachment)
      <a href="{{ '/storage/app/public/attachments'. $ticket->attachment }}" target="_blank" class="btn btn-sm btn-primary">Attachments</a></div>
     @endif
-  </div>
-  <div class="card-footer text-body-secondary">
-    <div class="d-flex justify-content-between">
+  </div>  </br>
+  <div class="d-flex justify-content-between p-3">
     <p>Created at: {{ $ticket->created_at }}</p>
     <p>Updated at: {{ $ticket->updated_at }} </p>
 </div>
-  </div>
+  <div class="card-footer text-body-secondary">
+<a href="{{ route('ticket.edit', $ticket->id) }}" class="btn btn-success">Edit</a>
+<a href="{{ url('ticket/'.$ticket->id.'/delete') }}" class="btn btn-danger" onClick="return confirm('Are You Sure?')">Delete</a> 
+@if (auth()->user()->isAdmin)
+<a href="{{ route('ticket.edit', $ticket->id) }}" class="btn btn-primary">Approve</a>
+<a href="{{ route('ticket.edit', $ticket->id) }}" class="btn btn-warning">Reject</a>
+@else
+<button type="button" class="btn btn-primary position-relative">
+  Ticket Status
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    {{$ticket->status}}
+    <span class="visually-hidden">unread messages</span>
+  </span>
+</button>
+
+@endif
 </div>
   
    </div>
