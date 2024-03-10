@@ -59,8 +59,18 @@
 <a href="{{ route('ticket.edit', $ticket->id) }}" class="btn btn-success">Edit</a>
 <a href="{{ url('ticket/'.$ticket->id.'/delete') }}" class="btn btn-danger" onClick="return confirm('Are You Sure?')">Delete</a> 
 @if (auth()->user()->isAdmin)
-<a href="{{ route('ticket.edit', $ticket->id) }}" class="btn btn-primary">Approve</a>
-<a href="{{ route('ticket.edit', $ticket->id) }}" class="btn btn-warning">Reject</a>
+<form action="{{ route('ticket.update', $ticket->id) }}" method="post">
+@csrf
+@method('patch')
+<input type="hidden" name="status" value="approved">
+<button type="submit" class="btn btn-primary">Approve</button>
+</form>
+<form action="{{ route('ticket.update', $ticket->id) }}" method="post">
+@csrf
+@method('patch')
+<input type="hidden" name="status" value="rejected">
+<button type="submit" class="btn btn-warning">Reject</button>
+</form>
 @else
 <button type="button" class="btn btn-primary position-relative">
   Ticket Status

@@ -51,9 +51,9 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Title</th>
-      <th scope="col">Description</th>
       <th scope="col">Status</th>
-       <th scope="col">Attachments</th>
+      <th scope="col">Created At</th>
+       <th scope="col">Updated At</th>
         <th scope="col">Action</th>
     </tr>
   </thead>
